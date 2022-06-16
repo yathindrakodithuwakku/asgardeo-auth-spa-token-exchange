@@ -28,6 +28,8 @@ Token Exchange Grant Plugin for Single Page Applications (SPA) to be used with A
 
 Asgardeo Auth SPA Token Exchange Plugin allows React applications to perform token exchange grant.
 
+This plugin manages two seperate user session instances to hold Asgardeo(IDP) and Security Token Service (STS) session data.
+
 ## Prerequisite
 
 Create an organization in Asgardeo if you don't already have one. The organization name you choose will be referred to as `<org_name>` throughout this document.
@@ -129,7 +131,171 @@ const Dashboard = (): ReactElement => {
 }
 ```
 
-[Learn more](#apis).
+## APIs
+
+### getDecodedIDPIDToken
+
+```typescript
+getDecodedIDPIDToken(): Promise<DecodedIDTokenPayload>
+```
+
+#### Returns
+
+A promise that returns with the IDP [`DecodedIDTokenPayload`](#DecodedIDTokenPayload) object.
+
+#### Description
+
+This method returns a promise that resolves with the decoded payload of the JWT ID token provided by the IDP.
+
+#### Example
+
+```TypeScript
+getDecodedIDPIDToken().then((idToken) => {
+    // console.log(idToken);
+}).error((error) => {
+    // console.error(error);
+});
+```
+---
+
+
+### httpRequest
+
+```typescript
+httpRequest(config: `HttpRequestConfig`): Promise<HttpResponse>;
+```
+
+#### Arguments
+
+1. config: `[HttpRequestConfig](#httpRequestConfig)`
+   A config object with the settings necessary to send http requests. This object is similar to the `AxiosRequestConfig` but provides these additional attributes:
+
+   |Attribute|Type|Default|Description|
+   |--|--|--|--|
+   |`attachToken`|`boolean`|`true`|If set to `true`, the token will be attached to the request header.|
+   |`shouldEncodeToFormData`|`boolean`|`false`|If set to `true`, the request body will be encoded to `FormData`. The body (specified by the `data` attribute) should be a Javascript object. |
+
+#### Returns
+
+A Promise that resolves with the response.
+
+#### Description
+
+This method is used to send http requests to the identity server. The developer doesn't need to manually attach the access token since this method does it automatically.
+
+If the `storage` type is set to `sessionStorage` or `localStorage`, the developer may choose to implement their own ways of sending http requests by obtaining the access token from the relevant storage medium and attaching it to the header. However, if the `storage` is set to `webWorker`, this is the _ONLY_ way http requests can be sent.
+
+This method accepts a config object which is of type `AxiosRequestConfig`. If you have used `axios` before, you can use the `httpRequest` in the exact same way.
+
+For example, to get the user profile details after signing in, you can query the `me` endpoint as follows:
+
+#### Example
+
+```TypeScript
+const auth = AsgardeoSPAClient.getInstance();
+
+const requestConfig = {
+    headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/scim+json"
+    },
+    method: "GET",
+    url: "https://api.asgardeo.io/scim2/me"
+};
+
+return httpRequest(requestConfig)
+    .then((response) => {
+        // console.log(response);
+    })
+    .catch((error) => {
+        // console.error(error);
+    });
+```
+
+---
+
+### getDecodedIDToken
+
+```typescript
+getDecodedIDToken(): Promise<DecodedIDTokenPayload>
+```
+
+#### Returns
+
+A promise that returns with the [`DecodedIDTokenPayload`](#DecodedIDTokenPayload) object.
+
+#### Description
+
+This method returns a promise that resolves with the decoded payload of the JWT ID token.
+
+#### Example
+
+```TypeScript
+getDecodedIDToken().then((idToken) => {
+    // console.log(idToken);
+}).error((error) => {
+    // console.error(error);
+});
+```
+---
+
+
+### httpRequest
+
+```typescript
+httpRequest(config: `HttpRequestConfig`): Promise<HttpResponse>;
+```
+
+#### Arguments
+
+1. config: `[HttpRequestConfig](#httpRequestConfig)`
+   A config object with the settings necessary to send http requests. This object is similar to the `AxiosRequestConfig` but provides these additional attributes:
+
+   |Attribute|Type|Default|Description|
+   |--|--|--|--|
+   |`attachToken`|`boolean`|`true`|If set to `true`, the token will be attached to the request header.|
+   |`shouldEncodeToFormData`|`boolean`|`false`|If set to `true`, the request body will be encoded to `FormData`. The body (specified by the `data` attribute) should be a Javascript object. |
+   |`shouldAttachIDPAccessToken`|`boolean`|`false`| If set to `true`, the IDP access token will be attached to the the request `Authorization` header. |
+
+#### Returns
+
+A Promise that resolves with the response.
+
+#### Description
+
+This method is used to send http requests to the identity server. The developer doesn't need to manually attach the access token since this method does it automatically.
+
+If the `storage` type is set to `sessionStorage` or `localStorage`, the developer may choose to implement their own ways of sending http requests by obtaining the access token from the relevant storage medium and attaching it to the header. However, if the `storage` is set to `webWorker`, this is the _ONLY_ way http requests can be sent.
+
+This method accepts a config object which is of type `AxiosRequestConfig`. If you have used `axios` before, you can use the `httpRequest` in the exact same way.
+
+For example, to get the user profile details after signing in, you can query the `me` endpoint as follows:
+
+#### Example
+
+```TypeScript
+const auth = AsgardeoSPAClient.getInstance();
+
+const requestConfig = {
+    headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/scim+json"
+    },
+    method: "GET",
+    url: "https://api.asgardeo.io/t/{org_name}/oauth2/userinfo",
+    shouldAttachIDPAccessToken: true
+};
+
+return httpRequest(requestConfig)
+    .then((response) => {
+        // console.log(response);
+    })
+    .catch((error) => {
+        // console.error(error);
+    });
+```
+
+---
 
 ## Models
 
