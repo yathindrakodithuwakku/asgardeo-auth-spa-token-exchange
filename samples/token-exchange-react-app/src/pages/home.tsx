@@ -76,6 +76,7 @@ export const HomePage: FunctionComponent<
             const basicUserInfo = await getBasicUserInfo();
             const idToken = await getIDToken();
             const decodedIDToken = await getDecodedIDToken();
+            // const decodedIDPIDToken = await getDecodedIDPIDToken();
 
             const derivedState = {
                 authenticateResponse: basicUserInfo,
@@ -127,7 +128,7 @@ export const HomePage: FunctionComponent<
                 </p>
                 <p>
                     Visit repo{" "}
-                    <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk/tree/master/samples/asgardeo-react-app">
+                    <a href="https://github.com/asgardeo/asgardeo-auth-spa-token-exchange/tree/master/samples/asgardeo-react-app">
                         README
                     </a>{" "}
                     for more details.
@@ -179,10 +180,10 @@ export const HomePage: FunctionComponent<
                         Application via the OpenID Connect Authorization Code
                         flow, which is integrated using the&nbsp;
                         <a
-                            href="https://github.com/asgardeo/asgardeo-auth-react-sdk"
+                            href="https://github.com/asgardeo/asgardeo-auth-spa-token-exchange"
                             target="_blank" rel="noreferrer"
                         >
-                            Asgardeo Auth React SDK
+                            Asgardeo Auth SPA Token Exchange
                         </a>
                         .
                     </h4>

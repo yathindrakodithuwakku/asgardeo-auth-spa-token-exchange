@@ -113,7 +113,7 @@ export const LandingPage: FunctionComponent<
                 </p>
                 <p>
                     Visit repo{" "}
-                    <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk/tree/master/samples/asgardeo-react-app">
+                    <a href="https://github.com/asgardeo/asgardeo-auth-spa-token-exchange/tree/master/samples/asgardeo-react-app">
                         README
                     </a>{" "}
                     for more details.
@@ -139,18 +139,18 @@ export const LandingPage: FunctionComponent<
         >
             <div className="content">
                 <div className="home-image">
-                    <img src={REACT_LOGO} className="react-logo-image logo" />
+                    <img src={REACT_LOGO} className="react-logo-image logo" alt="react logo" />
                 </div>
                 <h4 className={"spa-app-description"}>
                     Sample demo to showcase authentication for a Single Page
                     Application via the OpenID Connect Authorization Code flow,
                     which is integrated using the&nbsp;
                     <a
-                        href="https://github.com/asgardeo/asgardeo-auth-react-sdk"
+                        href="https://github.com/asgardeo/asgardeo-auth-spa-token-exchange"
                         target="_blank"
                         rel="noreferrer"
                     >
-                        Asgardeo Auth React SDK
+                        Asgardeo Auth SPA Token Exchange
                     </a>
                     .
                 </h4>
