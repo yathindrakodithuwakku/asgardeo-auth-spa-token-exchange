@@ -1,0 +1,72 @@
+{
+    "name": "@asgardeo/token-exchange-plugin",
+    "version": "0.0.1",
+    "description": "Token Exchange Plugin for Asgardeo Single-Page Applications.",
+    "keywords": [
+        "Token-Exchange",
+        "Plugin",
+        "Asgardeo",
+        "authentication",
+        "oidc",
+        "oauth2",
+        "spa"
+    ],
+    "main": "dist/token-exchange.production.js",
+    "module": "dist/token-exchange.production.esm.js",
+    "types": "dist/src/index.d.ts",
+    "scripts": {
+        "lint": "eslint --ext .js,.ts .",
+        "fix-lint": "eslint --ext .js,.ts . --fix",
+        "build": "cross-env NODE_ENV=production rimraf dist && rimraf umd && yarn type-check && rollup -c",
+        "build:dev": "rimraf dist && rimraf umd && yarn type-check && cross-env NODE_ENV=development rollup -m -c --watch --environment BUILD:development",
+        "type-check": "tsc",
+        "type-check:watch": "yarn type-check -- --watch",
+        "clean": "rimraf dist && rimraf umd && rimraf node_modules",
+        "prepublish": "yarn build"
+    },
+    "author": "Asgardeo",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@asgardeo/auth-spa": "^0.4.1"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.17.10",
+        "@babel/core": "^7.18.0",
+        "@babel/plugin-proposal-class-properties": "^7.17.12",
+        "@babel/plugin-proposal-decorators": "^7.17.12",
+        "@babel/plugin-transform-modules-commonjs": "^7.18.0",
+        "@babel/plugin-transform-runtime": "^7.18.0",
+        "@babel/preset-env": "^7.18.0",
+        "@babel/preset-typescript": "^7.17.12",
+        "@babel/runtime": "^7.18.0",
+        "@rollup/plugin-babel": "^5.3.1",
+        "@rollup/plugin-commonjs": "^22.0.0",
+        "@rollup/plugin-eslint": "^8.0.2",
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^13.3.0",
+        "@rollup/plugin-replace": "^4.0.0",
+        "@types/crypto-js": "^4.1.1",
+        "@types/node": "^17.0.35",
+        "core-js": "^3.22.6",
+        "cross-env": "^7.0.3",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.74.1",
+        "rollup-plugin-analyzer": "^4.0.0",
+        "rollup-plugin-node-polyfills": "^0.2.1",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-typescript2": "^0.31.2",
+        "rollup-plugin-web-worker-loader": "^1.6.1",
+        "typescript": "^4.6.4"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/asgardeo/asgardeo-auth-spa-sdk.git"
+    },
+    "bugs": {
+        "url": "https://github.com/asgardeo/asgardeo-auth-spa-sdk/issues"
+    },
+    "homepage": "https://github.com/asgardeo/asgardeo-auth-spa-sdk#readme",
+    "browserslist": [
+        "defaults"
+    ]
+}
