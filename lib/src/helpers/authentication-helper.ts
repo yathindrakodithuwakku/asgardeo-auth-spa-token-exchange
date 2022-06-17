@@ -202,13 +202,15 @@ export class TokenExchangeAuthenticationHelper<
     }
 
     public async getDecodedIDToken(): Promise<DecodedIDTokenPayload> {
-        const stsSessionData =
-            await this._dataLayer.getCustomData<StsExchangeResponse>(
-                StsStore.SessionData
-            );
-
+        // TODO Uncomment this once choreo STS enable id token in the response. 
+        // Temporarily referring to IDP session data
         // const stsSessionData =
-        //     await this._dataLayer.getSessionData();
+        //     await this._dataLayer.getCustomData<StsExchangeResponse>(
+        //         StsStore.SessionData
+        //     );
+
+        const stsSessionData =
+            await this._dataLayer.getSessionData();
 
         const idToken = stsSessionData?.id_token;
 
