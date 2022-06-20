@@ -51,21 +51,21 @@ export const LogoutRequestDenied: FunctionComponent<
             <div className="ui visible negative message">
                 <div className="mt-4 h3 b"> {errorMessage} </div>
                 <p className="my-4">
-                    <a
+                    <span
                         className="link-button pointer"
                         role="button"
                         onClick={handleLogin}
                     >
                         Try Log in again
-                    </a>
+                    </span>
                     &nbsp;or&nbsp;
-                    <a
+                    <span
                         onClick={handleLogout}
                         className="link-button pointer"
                         role="button"
                     >
                         Log out from the application.
-                    </a>
+                    </span>
                 </p>
             </div>
         </DefaultLayout>

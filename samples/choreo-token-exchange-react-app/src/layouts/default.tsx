@@ -65,7 +65,7 @@ export const DefaultLayout: FunctionComponent<
                     children
                 )}
             </div>
-            <img src={FOOTER_LOGOS} className="footer-image" />
+            <img src={FOOTER_LOGOS} className="footer-image" alt="footer logo" />
         </>
     );
 };

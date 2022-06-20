@@ -20,6 +20,7 @@ import { Hooks, useAuthContext } from "@asgardeo/auth-react";
 import React, {
     FunctionComponent,
     ReactElement,
+    useCallback,
     useEffect,
     useState
 } from "react";
@@ -74,6 +75,13 @@ export const LandingPage: FunctionComponent<
         }
     }, [stateParam, errorDescParam]);
 
+    const handleLogin = useCallback(() => {
+        setHasLogoutFailureError(false);
+        signIn().catch(() => {
+            setHasAuthenticationErrors(true);
+        });
+    }, [signIn]);
+    
     /**
      * handles the error occurs when the logout consent page is enabled
      * and the user clicks 'NO' at the logout consent page
@@ -88,14 +96,7 @@ export const LandingPage: FunctionComponent<
                 handleLogin();
             }
         });
-    }, [on]);
-
-    const handleLogin = () => {
-        setHasLogoutFailureError(false);
-        signIn().catch(() => {
-            setHasAuthenticationErrors(true);
-        });
-    };
+    }, [errorDescParam, handleLogin, on]);
 
     const handleLogout = () => {
         signOut();
