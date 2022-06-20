@@ -1,5 +1,5 @@
 {
-  "name": "@asgardeo/choreo-token-exchange-react-app",
+  "name": "@asgardeo/choreo-token-exchange-sample-react-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
