@@ -1,0 +1,14 @@
+{
+    "clientID": "",
+    "baseUrl": "https://api.asgardeo.io/t/<org_name>",
+    "signInRedirectURL": "https://localhost:3000/signin",
+    "signOutRedirectURL": "https://localhost:3000/login",
+    "scope": ["openid","email","profile"],
+    "stsConfig": {
+        "client_id": "",
+        "client_secret": "",
+        "orgHandle": "",
+        "scope": [ ]
+    },
+    "stsTokenEndpoint": ""
+}
