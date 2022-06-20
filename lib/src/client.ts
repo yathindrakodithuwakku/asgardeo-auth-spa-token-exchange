@@ -46,7 +46,7 @@ export interface CustomAuthClientConfig {
 export type STSClientConfig = AuthSPAClientConfig & CustomAuthClientConfig;
 
 /**
- * This class provides the necessary methods to implement authentication in a Single Page Application.
+ * This class provides the methods to implement token exchange grant in a Single Page Application.
  *
  * @export
  * @class TokenExchangePlugin

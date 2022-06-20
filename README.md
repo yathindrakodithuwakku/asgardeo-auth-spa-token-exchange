@@ -26,7 +26,7 @@ Token Exchange Grant Plugin for Single Page Applications (SPA) to be used with A
 
 ## Introduction
 
-Asgardeo Auth SPA Token Exchange Plugin allows React applications to perform token exchange grant.
+Asgardeo Auth SPA Token Exchange Plugin allows single page applications to perform token exchange grant.
 
 This plugin manages two seperate user session instances to hold Asgardeo(IDP) and Security Token Service (STS) session data.
 
