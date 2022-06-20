@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -52,11 +52,8 @@ export const HomePage: FunctionComponent<
         signOut,
         getBasicUserInfo,
         getIDToken,
-        getDecodedIDPIDToken,
         getDecodedIDToken,
         on,
-        httpRequest,
-        error
     } = useAuthContext();
 
     const [derivedAuthenticationState, setDerivedAuthenticationState] =
@@ -65,7 +62,6 @@ export const HomePage: FunctionComponent<
         useState<boolean>(false);
     const [hasLogoutFailureError, setHasLogoutFailureError] =
         useState<boolean>();
-    const [httpResponse, setHttpResponse] = useState<any>(null);
 
     const search = useLocation().search;
     const stateParam = new URLSearchParams(search).get("state");
@@ -120,45 +116,6 @@ export const HomePage: FunctionComponent<
         signOut();
     };
 
-    // const handleRequest = async () => {
-    //     try {
-    //         const response = await httpRequest({
-    //             url: `/projects/1.0.0/graphql`,
-    //             method: "POST",
-    //             data: JSON.stringify({
-    //                 query: `
-    //                     query {
-    //                         systemStatus {
-    //                             status
-    //                             serviceStatus {
-    //                                 name
-    //                                 status
-    //                                 message
-    //                                 visible
-    //                             }
-    //                         }
-    //                 }`
-    //             })
-    //         });
-    //         setHttpResponse(response?.data?.data);
-    //     } catch (error) {
-    //         setHttpResponse({ status: "Error occured" });
-    //     }
-    // };
-
-    // const handleIdpRequest = async () => {
-    //     try {
-    //         const response = await httpRequest({
-    //             url: `/validate-user`,
-    //             method: "GET",
-    //             shouldAttachIDPAccessToken: true
-    //         });
-    //         setHttpResponse(response?.data);
-    //     } catch (error) {
-    //         setHttpResponse({ status: "Error occured" });
-    //     }
-    // };
-
     // If `clientID` is not defined in `config.json`, show a UI warning.
     if (!authConfig?.clientID) {
         return (
@@ -209,27 +166,6 @@ export const HomePage: FunctionComponent<
                         Logout
                     </button>
                     <hr className="mt-4" />
-                    {/* <div className="row justify-center">
-                        <button
-                            className="btn primary mx-4"
-                            onClick={() => {
-                                handleRequest();
-                            }}
-                        >
-                            Send Request
-                        </button>
-                        <button
-                            className="btn primary"
-                            onClick={() => {
-                                handleIdpRequest();
-                            }}
-                        >
-                            Send IDP Request
-                        </button>
-                    </div>
-                    {httpResponse && (
-                        <HttpResponse httpResponse={httpResponse} />
-                    )} */}
                 </div>
             ) : (
                 <div className="content">
