@@ -87,7 +87,7 @@ export const HomePage: FunctionComponent<
 
             setDerivedAuthenticationState(derivedState);
         })();
-    }, [state.isAuthenticated]);
+    }, [getBasicUserInfo, getDecodedIDToken, getIDToken, state?.isAuthenticated]);
 
     useEffect(() => {
         if (stateParam && errorDescParam) {
