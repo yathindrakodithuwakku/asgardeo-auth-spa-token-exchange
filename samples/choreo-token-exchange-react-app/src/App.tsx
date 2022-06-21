@@ -21,12 +21,12 @@ import { TokenExchangePlugin } from "@asgardeo/token-exchange-plugin";
 import React, { FunctionComponent, ReactElement } from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./app.css";
 import { default as authConfig } from "./config.json";
 import { ErrorBoundary } from "./error-boundary";
 import { HomePage, NotFoundPage } from "./pages";
 import { LandingPage } from "./pages/landing";
 import { LoggedOutPage } from "./pages/LoggedOut";
+import "./app.css";
 
 const AppContent: FunctionComponent = (): ReactElement => {
     const { error } = useAuthContext();
