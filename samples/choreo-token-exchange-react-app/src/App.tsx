@@ -1,5 +1,3 @@
-import "./App.css";
-
 /**
  * Copyright (c) 2022, WSO2 Inc. (http://www.wso2.com) All Rights Reserved.
  *
@@ -18,28 +16,42 @@ import "./App.css";
  * under the License.
  */
 
-import { useAuthContext } from "@asgardeo/auth-react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AuthProvider, Storage, useAuthContext } from "@asgardeo/auth-react";
+import { TokenExchangePlugin } from "@asgardeo/token-exchange-plugin";
+import React, { FunctionComponent, ReactElement } from "react";
+import { render } from "react-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./app.css";
+import { default as authConfig } from "./config.json";
 import { ErrorBoundary } from "./error-boundary";
 import { HomePage, NotFoundPage } from "./pages";
 import { LandingPage } from "./pages/landing";
 import { LoggedOutPage } from "./pages/LoggedOut";
 
-function App() {
+const AppContent: FunctionComponent = (): ReactElement => {
     const { error } = useAuthContext();
-
+    
     return (
         <ErrorBoundary error={error}>
             <Router>
-                <Routes>
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/signin" element={<HomePage />} />
-                    <Route path="/login" element={<LoggedOutPage />} />
-                    <Route path="*" element={<NotFoundPage />} />
-                </Routes>
+                <Switch>
+                    <Route exact path="/" component={LandingPage} />
+                    <Route path="/signin" component={HomePage} />
+                    <Route path="/login" component={LoggedOutPage} />
+                    <Route path="*" component={NotFoundPage} />
+                </Switch>
             </Router>
         </ErrorBoundary>
-    );
-}
+    )
+};
 
-export default App;
+const App = () => (
+    <AuthProvider 
+        config={{...authConfig, storage: "webWorker" as Storage.WebWorker}}
+        plugin={ TokenExchangePlugin.getInstance() }
+    >
+        <AppContent />
+    </AuthProvider>
+);
+
+render((<App />), document.getElementById("root"));
