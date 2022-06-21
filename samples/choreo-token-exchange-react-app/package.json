@@ -1,10 +1,10 @@
 {
   "name": "@asgardeo/choreo-token-exchange-sample-react-app",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@asgardeo/auth-react": "1.1.11",
-    "@asgardeo/token-exchange-plugin": "0.0.1",
+    "@asgardeo/token-exchange-plugin": "^0.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
