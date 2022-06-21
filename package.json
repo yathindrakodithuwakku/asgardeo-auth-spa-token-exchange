@@ -1,7 +1,7 @@
 {
   "name": "token-exchange-plugin",
   "description": "Token Exchange Plugin for Asgardeo Single-Page Applications.",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "main": "index.js",
   "keywords": [
     "Token-Exchange",
