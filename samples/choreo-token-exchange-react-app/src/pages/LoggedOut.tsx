@@ -17,7 +17,7 @@
  */
 
 import React, { FunctionComponent, ReactElement } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
 
 /**
@@ -35,7 +35,7 @@ type LoggedOutPagePropsInterface = {};
 export const LoggedOutPage: FunctionComponent<
     LoggedOutPagePropsInterface
 > = (): ReactElement => {
-    const navigate = useNavigate();
+    const history = useHistory();
 
     return (
         <DefaultLayout>
@@ -43,7 +43,7 @@ export const LoggedOutPage: FunctionComponent<
             <button
                 className="btn primary"
                 onClick={() => {
-                    navigate("/signin");
+                    history.push("/signin");
                 }}
             >
                 Go back to home

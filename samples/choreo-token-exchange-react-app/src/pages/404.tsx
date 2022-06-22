@@ -17,7 +17,7 @@
  */
 
 import React, { FunctionComponent, ReactElement } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
 
 /**
@@ -32,22 +32,16 @@ type NotFoundPagePropsInterface = {};
  *
  * @return {React.ReactElement}
  */
-export const NotFoundPage: FunctionComponent<
-    NotFoundPagePropsInterface
-> = (): ReactElement => {
-    const navigate = useNavigate();
+export const NotFoundPage: FunctionComponent<NotFoundPagePropsInterface> = (): ReactElement => {
+
+    const history = useHistory();
 
     return (
         <DefaultLayout>
-            <h3>404: Page not found</h3>
-            <button
-                className="btn primary"
-                onClick={() => {
-                    navigate("/signin");
-                }}
-            >
-                Go back to home
-            </button>
+            <h3>
+                404: Page not found
+            </h3>
+            <button className="btn primary" onClick={() => { history.push("/home") }}>Go back to home</button>
         </DefaultLayout>
     );
 };

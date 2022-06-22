@@ -16,16 +16,28 @@
  * under the License.
  */
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+module.exports = {
+    env: {
+        test: {
+            plugins: ["@babel/plugin-transform-modules-commonjs"]
+        }
+    },
+    plugins: [
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        "@babel/plugin-proposal-class-properties"
+    ],
+    presets: [
+        [
+            "@babel/preset-env",
+            {
+                corejs: {
+                    proposals: true,
+                    version: "3.6"
+                },
+                useBuiltIns: "entry"
+            }
+        ],
+        "@babel/preset-typescript",
+        "@babel/preset-react"
+    ]
+};

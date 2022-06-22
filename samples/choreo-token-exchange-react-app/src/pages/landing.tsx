@@ -20,14 +20,13 @@ import { Hooks, useAuthContext } from "@asgardeo/auth-react";
 import React, {
     FunctionComponent,
     ReactElement,
-    useCallback,
     useEffect,
     useState
 } from "react";
 import { default as authConfig } from "../config.json";
 import REACT_LOGO from "../images/react-logo.png";
 import { DefaultLayout } from "../layouts/default";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { LogoutRequestDenied } from "../components/LogoutRequestDenied";
 import { USER_DENIED_LOGOUT } from "../constants/errors";
 
@@ -48,7 +47,7 @@ export const LandingPage: FunctionComponent<
 > = (): ReactElement => {
     const { state, signIn, signOut, on } = useAuthContext();
 
-    const navigate = useNavigate();
+    const history = useHistory();
 
     const [hasAuthenticationErrors, setHasAuthenticationErrors] =
         useState<boolean>(false);
@@ -64,8 +63,8 @@ export const LandingPage: FunctionComponent<
             return;
         }
 
-        navigate("/signin");
-    }, [state.isAuthenticated, navigate]);
+        history.push("/signin");
+    }, [state.isAuthenticated]);
 
     useEffect(() => {
         if (stateParam && errorDescParam) {
@@ -74,14 +73,12 @@ export const LandingPage: FunctionComponent<
             }
         }
     }, [stateParam, errorDescParam]);
-
-    const handleLogin = useCallback(() => {
-        setHasLogoutFailureError(false);
-        signIn().catch(() => {
-            setHasAuthenticationErrors(true);
-        });
-    }, [signIn]);
     
+    const handleLogin = () => {
+        setHasLogoutFailureError(false);
+        signIn();
+    };
+
     /**
      * handles the error occurs when the logout consent page is enabled
      * and the user clicks 'NO' at the logout consent page
@@ -114,7 +111,7 @@ export const LandingPage: FunctionComponent<
                 </p>
                 <p>
                     Visit repo{" "}
-                    <a href="https://github.com/asgardeo/asgardeo-auth-spa-token-exchange/tree/master/samples/asgardeo-react-app">
+                    <a href="https://github.com/asgardeo/asgardeo-auth-spa-token-exchange/tree/master/samples/choreo-token-exchange-react-app">
                         README
                     </a>{" "}
                     for more details.
