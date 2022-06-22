@@ -42,7 +42,7 @@ export const AuthenticationFailure: FunctionComponent = (): ReactElement => {
       <div className="content">
           <div className="ui visible negative message">
               <div className="header"><b>Authentication Error!</b></div>
-              <p>Please check application configuration and try login again!.</p>
+              <p>Please check the application configuration and try login again!.</p>
           </div>
           <button className="btn primary" onClick={ handleLogin }>Login</button>
       </div>
