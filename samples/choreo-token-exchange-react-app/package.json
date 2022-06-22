@@ -1,6 +1,6 @@
 {
     "name": "@asgardeo/choreo-token-exchange-sample-react-app",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "React based sample SPA to demonstrate Asgardeo / WSO2 Identity Server Auth SPA Token Exchange usage",
     "keywords": [
         "Token-Exchange",
@@ -29,7 +29,7 @@
     },
     "dependencies": {
         "@asgardeo/auth-react": "^1.1.11",
-        "@asgardeo/token-exchange-plugin": "^0.1.0",
+        "@asgardeo/token-exchange-plugin": "^0.1.1",
         "@babel/runtime-corejs3": "^7.11.2",
         "react": "^16.14.0",
         "react-dom": "16.14.0",
