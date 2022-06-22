@@ -127,7 +127,7 @@
                  </p>
                  <p>
                      Visit repo{" "}
-                     <a href="https://github.com/asgardeo/asgardeo-auth-spa-token-exchange/tree/master/samples/asgardeo-react-app">
+                     <a href="https://github.com/asgardeo/asgardeo-auth-spa-token-exchange/tree/master/samples/choreo-token-exchange-react-app">
                          README
                      </a>{" "}
                      for more details.
