@@ -211,7 +211,7 @@ export class TokenExchangeAuthenticationHelper<
                 StsStore.SessionData
             );
 
-        if (stsSessionData?.refresh_token) {
+        if (stsSessionData?.expires_in) {
             // Refresh 10 seconds before the expiry time
             const expiryTime = parseInt(stsSessionData.expires_in);
             const time = expiryTime <= 10 ? expiryTime : expiryTime - 10;
