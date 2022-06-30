@@ -38,7 +38,8 @@ import { StsStore } from "../constants/stsStore";
 
 export interface StsExchangeResponse {
     access_token: string;
-    expires_in: number;
+    refresh_token: string;
+    expires_in: string;
     issued_token_type: string;
     scope: string;
     token_type: string;
@@ -198,7 +199,27 @@ export class TokenExchangeAuthenticationHelper<
 
         await this.exchangeAccessToken();
 
+        // Automatically refresh the sts access token
+        this.refreshAccessTokenAutomatically();
+
         return userInfo;
+    }
+
+    public async refreshAccessTokenAutomatically(): Promise<void> {
+        const stsSessionData =
+            await this._dataLayer.getCustomData<StsExchangeResponse>(
+                StsStore.SessionData
+            );
+
+        if (stsSessionData?.expires_in) {
+            // Refresh 10 seconds before the expiry time
+            const expiryTime = parseInt(stsSessionData.expires_in);
+            const time = expiryTime <= 10 ? expiryTime : expiryTime - 10;
+
+            setTimeout(async () => {
+                await this.refreshAccessToken();
+            }, time * 1000);
+        }
     }
 
     public async getDecodedIDToken(): Promise<DecodedIDTokenPayload> {
