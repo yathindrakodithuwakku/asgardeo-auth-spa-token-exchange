@@ -28,7 +28,6 @@ import {
     SPAHelper,
     WebWorkerClientConfig
 } from "@asgardeo/auth-spa";
-import base64url from "base64url";
 import { flatten } from "flatten-anything";
 import { CustomAuthClientConfig } from "../client";
 import {
@@ -185,8 +184,8 @@ export class TokenExchangeAuthenticationHelper<
 			);
         }
 
-        const encodedAuthHeader = base64url
-            .encode(`${config?.stsConfig?.credentials?.client_id}:${config?.stsConfig?.credentials?.client_secret}`);
+        const encodedAuthHeader = 
+            btoa(`${config?.stsConfig?.credentials?.client_id}:${config?.stsConfig?.credentials?.client_secret}`);
 
         const requestOptions: RequestInit = {
             body: `grant_type=refresh_token&refresh_token=${stsSessionData.refresh_token}`,
@@ -280,6 +279,9 @@ export class TokenExchangeAuthenticationHelper<
             );
             await this.exchangeAccessToken();
         }
+
+		// Automatically refresh the sts access token
+        this.refreshAccessTokenAutomatically();
 
         return userInfo;
     }

@@ -47,7 +47,7 @@ const AppContent: FunctionComponent = (): ReactElement => {
 
 const App = () => (
     <AuthProvider 
-        config={{...authConfig, storage: "sessionStorage" as Storage.WebWorker}}
+        config={{...authConfig, storage: "webWorker" as Storage.WebWorker}}
         plugin={ TokenExchangePlugin.getInstance() }
     >
         <AppContent />
