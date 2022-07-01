@@ -28,8 +28,13 @@ import { TokenExchangeAuthenticationHelper } from "./helpers/authentication-help
 
 const PRIMARY_INSTANCE = "primaryInstance";
 
-export interface STSConfig {
+export interface Credentials {
     client_id: string;
+    client_secret?: string;
+}
+
+export interface STSConfig {
+    credentials: Credentials;
     scope: string[];
     resource?: string;
     audience?: string;

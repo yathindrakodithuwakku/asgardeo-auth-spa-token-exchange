@@ -28,6 +28,8 @@ import {
     SPAHelper,
     WebWorkerClientConfig
 } from "@asgardeo/auth-spa";
+import base64url from "base64url";
+import { flatten } from "flatten-anything";
 import { CustomAuthClientConfig } from "../client";
 import {
     GRANT_TYPE,
@@ -38,7 +40,8 @@ import { StsStore } from "../constants/stsStore";
 
 export interface StsExchangeResponse {
     access_token: string;
-    expires_in: number;
+	refresh_token: string;
+    expires_in: string;
     issued_token_type: string;
     scope: string;
     token_type: string;
@@ -90,11 +93,17 @@ export class TokenExchangeAuthenticationHelper<
             subject_token_type: SUBJECT_TOKEN_TYPE
         };
 
-        for (const key in config?.stsConfig) {
-            let value: string | string[] = config?.stsConfig[key];
+        const flattenedData = flatten({ ...config?.stsConfig }, 1)
+
+        for (let key in flattenedData) {
+            let value: string | string[] = flattenedData[key];
 
             if (key === "scope" && Array.isArray(value)) {
                 value = value.join(" ");
+            } else if(key === "credentials.client_id") {
+                key = "client_id";
+            } else if(key === "credentials.client_secret") {
+                key = "client_secret";
             }
             exchangeGrantData[key] = value;
         }
@@ -148,6 +157,76 @@ export class TokenExchangeAuthenticationHelper<
         }
     }
 
+    public async refreshStsAccessToken(): Promise<void> {
+        const config =
+            (await this._dataLayer.getConfigData()) as AuthClientConfig<CustomAuthClientConfig>;
+
+        const stsSessionData: StsExchangeResponse =
+            await this._dataLayer.getCustomData<StsExchangeResponse>(
+                StsStore.SessionData
+            );
+
+		if (
+			!stsSessionData?.refresh_token
+		) {
+            throw new AsgardeoAuthException(
+				"TOKEN_EXCHANGE-AUTH_HELPER-RSAT1-NF01",
+				"Refresh token not found",
+				"STS is not configured to return refresh token"
+			);
+        } else if (
+			!config?.stsConfig?.credentials?.client_id ||
+			!config?.stsConfig?.credentials?.client_secret
+		) {
+            throw new AsgardeoAuthException(
+				"TOKEN_EXCHANGE-AUTH_HELPER-RSAT2-NF02",
+				"Client credentials not found",
+				"Client credentials are not configured"
+			);
+        }
+
+        const encodedAuthHeader = base64url
+            .encode(`${config?.stsConfig?.credentials?.client_id}:${config?.stsConfig?.credentials?.client_secret}`);
+
+        const requestOptions: RequestInit = {
+            body: `grant_type=refresh_token&refresh_token=${stsSessionData.refresh_token}`,
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                authorization: `Basic ${ encodedAuthHeader.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "")}`
+            },
+            method: "POST",
+            mode: "cors"
+        };
+
+        try {
+            const response = await fetch(config?.stsTokenEndpoint ?? "", requestOptions);
+            if (!response.ok) {
+                throw new AsgardeoAuthException(
+                    "TOKEN_EXCHANGE-AUTH_HELPER-RSAT3-NE01",
+                    "Invalid refresh token response",
+                    "STS token refreshing has been failed"
+                );
+            }
+
+            const responseBody: StsExchangeResponse = await response.json();
+
+            if (responseBody?.access_token) {
+                await this._dataLayer.setCustomData(
+                    StsStore.SessionData,
+                    responseBody
+                );
+            }
+
+        } catch (error) {
+            throw new AsgardeoAuthException(
+                "TOKEN_EXCHANGE-AUTH_HELPER-EAT1-NE02",
+                "Error in refreshing token",
+                "STS token refreshing has been failed"
+            );
+        }
+    }
+
     public async requestAccessToken(
         authorizationCode?: string,
         sessionState?: string,
@@ -192,13 +271,34 @@ export class TokenExchangeAuthenticationHelper<
             config: SPACustomGrantConfig
         ) => void
     ): Promise<BasicUserInfo> {
-        const userInfo = await super.refreshAccessToken(
-            enableRetrievingSignOutURLFromSession
-        );
-
-        await this.exchangeAccessToken();
+        let userInfo = {} as BasicUserInfo;
+        try {
+            this.refreshStsAccessToken();
+        } catch (error) {
+            userInfo = await super.refreshAccessToken(
+                enableRetrievingSignOutURLFromSession
+            );
+            await this.exchangeAccessToken();
+        }
 
         return userInfo;
+    }
+
+    public async refreshAccessTokenAutomatically(): Promise<void> {
+        const stsSessionData =
+            await this._dataLayer.getCustomData<StsExchangeResponse>(
+                StsStore.SessionData
+            );
+
+        if (stsSessionData?.expires_in) {
+            // Refresh 10 seconds before the expiry time
+            const expiryTime = parseInt("270");
+            const time = expiryTime <= 10 ? expiryTime : expiryTime - 10;
+
+            setTimeout(async () => {
+                await this.refreshAccessToken();
+            }, time * 1000);
+        }
     }
 
     public async getDecodedIDToken(): Promise<DecodedIDTokenPayload> {
