@@ -165,9 +165,7 @@ export class TokenExchangeAuthenticationHelper<
                 StsStore.SessionData
             );
 
-		if (
-			!stsSessionData?.refresh_token
-		) {
+		if (!stsSessionData?.refresh_token) {
             throw new AsgardeoAuthException(
 				"TOKEN_EXCHANGE-AUTH_HELPER-RSAT1-NF01",
 				"Refresh token not found",
