@@ -280,9 +280,6 @@ export class TokenExchangeAuthenticationHelper<
             await this.exchangeAccessToken();
         }
 
-		// Automatically refresh the sts access token
-        this.refreshAccessTokenAutomatically();
-
         // Automatically refresh the sts access token
         this.refreshAccessTokenAutomatically();
 
