@@ -39,7 +39,7 @@ import { StsStore } from "../constants/stsStore";
 
 export interface StsExchangeResponse {
     access_token: string;
-	refresh_token: string;
+    refresh_token: string;
     expires_in: string;
     issued_token_type: string;
     scope: string;
