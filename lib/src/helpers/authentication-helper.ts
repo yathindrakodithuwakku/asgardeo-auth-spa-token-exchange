@@ -39,7 +39,7 @@ import { StsStore } from "../constants/stsStore";
 
 export interface StsExchangeResponse {
     access_token: string;
-	refresh_token: string;
+    refresh_token: string;
     expires_in: string;
     issued_token_type: string;
     scope: string;
@@ -283,6 +283,9 @@ export class TokenExchangeAuthenticationHelper<
 		// Automatically refresh the sts access token
         this.refreshAccessTokenAutomatically();
 
+        // Automatically refresh the sts access token
+        this.refreshAccessTokenAutomatically();
+
         return userInfo;
     }
 
@@ -294,7 +297,7 @@ export class TokenExchangeAuthenticationHelper<
 
         if (stsSessionData?.expires_in) {
             // Refresh 10 seconds before the expiry time
-            const expiryTime = parseInt("270");
+            const expiryTime = parseInt(stsSessionData.expires_in);
             const time = expiryTime <= 10 ? expiryTime : expiryTime - 10;
 
             setTimeout(async () => {
