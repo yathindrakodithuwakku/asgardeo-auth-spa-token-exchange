@@ -42,6 +42,8 @@ Create an organization in Asgardeo if you don't already have one. The organizati
 
 2. Update configuration file `src/config.json` with your app details.
 
+3. Update the `API_ENDPOINT` value in the home.tsx, with the desired choreo API endpoint.
+
 **Note:** You need `stsConfig` and `stsTokenEndpoint`additional to the default Asgardeo Auth Client configuration declared in the React SDK Documentation [here](https://github.com/asgardeo/asgardeo-auth-react-sdk#configuration).
 
 Read more about the stsConfig [here](#STSConfig).
@@ -54,10 +56,7 @@ Read more about the stsConfig [here](#STSConfig).
     "signOutRedirectURL": "https://localhost:3000/login",
     "scope": ["openid","email","profile"],
     "stsConfig": {
-        "credentials": {
-            "client_id": "",
-            "client_secret": ""
-        },
+        "client_id": "",
         "scope": [],
         "orgHandle": "",
     },
@@ -313,7 +312,7 @@ return httpRequest(requestConfig)
 
 | Attribute | Required/Optional | Type | Default Value | Description |
 | --------- | ----------------- | ---- | ------------- | ----------- |
-| `credentials`          | Required          | `Credentials`        | -                                                                      | The client ID of the Security Token Service (STS). |                       |
+| `client_id`          | Required          | `string`        | -                                                                      | The client ID of the Security Token Service (STS). |                       |
 | `scope`                      | Required          | `string[]`      | `["openid"]`                                                            | Specifies the requested scopes.                                                                      |
 | `resource`               | Optional            | `string`        | ""                                                                      | The resource in which client intends to use the requested token.    
 | `audience`               | Optional            | `string`        | ""                                                                      | The target service in which client intends to use the requested token.                                   |
@@ -321,13 +320,6 @@ return httpRequest(requestConfig)
 | `actor_token_type`                  | Optional           | `string` | "" | Type of the security token in the `actor_token` parameter.
 
 **Note:** STSConfig also allows passing custom key-value pairs, which is intenteded to pass into the STSTokenEndpoint.
-
-### Credentials
-
-| Attribute | Required/Optional | Type | Default Value | Description |
-| --------- | ----------------- | ---- | ------------- | ----------- |
-| `client_id`          | Required          | `string`        | ""                                                                      | The client ID of the Security Token Service (STS). |                       |
-| `client_secret`                      | Required          | `string`      | ""                                                            | The client secret of the Security Token Service (STS).                                                                     |
 
 ## Develop
 

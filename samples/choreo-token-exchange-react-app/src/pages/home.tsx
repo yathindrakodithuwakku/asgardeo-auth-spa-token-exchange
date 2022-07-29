@@ -23,6 +23,7 @@
      useEffect,
      useState
  } from "react";
+ import { Store } from "react-notifications-component";
  import { default as authConfig } from "../config.json";
  import REACT_LOGO from "../images/react-logo.png";
  import { DefaultLayout } from "../layouts/default";
@@ -30,7 +31,10 @@
  import { useLocation } from "react-router-dom";
  import { LogoutRequestDenied } from "../components/LogoutRequestDenied";
  import { USER_DENIED_LOGOUT } from "../constants/errors";
+ import "react-notifications-component/dist/theme.css";
+import { APIResponse } from "../components/api-response";
  
+ const API_ENDPOINT = "{API_ENDPOINT}";
  /**
   * Decoded ID Token Response component Prop types interface.
   */
@@ -54,13 +58,16 @@
          getIDToken,
          getDecodedIDToken,
          on,
+         httpRequest
      } = useAuthContext();
  
-     const [derivedAuthenticationState, setDerivedAuthenticationState] =
+     const [ derivedAuthenticationState, setDerivedAuthenticationState ] =
          useState<any>(null);
-     const [hasAuthenticationErrors, setHasAuthenticationErrors] =
+     const [ apiResponse, setApiResponse ] =
+         useState<any>(null);
+     const [ hasAuthenticationErrors, setHasAuthenticationErrors ] =
          useState<boolean>(false);
-     const [hasLogoutFailureError, setHasLogoutFailureError] =
+     const [ hasLogoutFailureError, setHasLogoutFailureError ] =
          useState<boolean>();
  
      const search = useLocation().search;
@@ -85,6 +92,26 @@
              };
  
              setDerivedAuthenticationState(derivedState);
+
+             try {
+                const apiResponse = await performAPIRequest();
+                apiResponse && setApiResponse(apiResponse);
+             } catch (error) {
+                Store.addNotification({
+                    title: "Error!",
+                    message: "Invoking the API has failed",
+                    type: "danger",
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                      duration: 4000,
+                      onScreen: true
+                    }
+                  });
+             }
+             
          })();
      }, [state?.isAuthenticated]);
  
@@ -114,6 +141,12 @@
      const handleLogout = () => {
          signOut();
      };
+
+     const performAPIRequest = async () => {
+        return await httpRequest({
+            url: API_ENDPOINT
+        });
+     }
  
      // If `clientID` is not defined in `config.json`, show a UI warning.
      if (!authConfig?.clientID) {
@@ -153,6 +186,11 @@
          >
              {state.isAuthenticated ? (
                  <div className="content">
+                     {
+                        apiResponse ? <APIResponse
+                            response={apiResponse["data"]}
+                        /> : null
+                     }
                      <AuthenticationResponse
                          derivedResponse={derivedAuthenticationState}
                      />

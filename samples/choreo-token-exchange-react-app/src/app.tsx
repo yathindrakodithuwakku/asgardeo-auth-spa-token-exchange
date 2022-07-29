@@ -27,21 +27,25 @@ import { HomePage, NotFoundPage } from "./pages";
 import { LandingPage } from "./pages/landing";
 import { LoggedOutPage } from "./pages/LoggedOut";
 import "./app.css";
+import { ReactNotifications } from "react-notifications-component";
 
 const AppContent: FunctionComponent = (): ReactElement => {
     const { error } = useAuthContext();
     
     return (
-        <ErrorBoundary error={error}>
-            <Router>
-                <Switch>
-                    <Route exact path="/" component={LandingPage} />
-                    <Route path="/signin" component={HomePage} />
-                    <Route path="/login" component={LoggedOutPage} />
-                    <Route path="*" component={NotFoundPage} />
-                </Switch>
-            </Router>
-        </ErrorBoundary>
+        <>
+            <ReactNotifications />
+            <ErrorBoundary error={error}>
+                <Router>
+                    <Switch>
+                        <Route exact path="/" component={LandingPage} />
+                        <Route path="/signin" component={HomePage} />
+                        <Route path="/login" component={LoggedOutPage} />
+                        <Route path="*" component={NotFoundPage} />
+                    </Switch>
+                </Router>
+            </ErrorBoundary>
+        </>
     )
 };
 

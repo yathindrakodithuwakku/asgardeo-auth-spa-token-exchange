@@ -28,7 +28,6 @@ import {
     SPAHelper,
     WebWorkerClientConfig
 } from "@asgardeo/auth-spa";
-import { flatten } from "flatten-anything";
 import { CustomAuthClientConfig } from "../client";
 import {
     GRANT_TYPE,
@@ -92,17 +91,11 @@ export class TokenExchangeAuthenticationHelper<
             subject_token_type: SUBJECT_TOKEN_TYPE
         };
 
-        const flattenedData = flatten({ ...config?.stsConfig }, 1)
-
-        for (let key in flattenedData) {
-            let value: string | string[] = flattenedData[key];
+        for (const key in config?.stsConfig) {
+            let value: string | string[] = config?.stsConfig[key];
 
             if (key === "scope" && Array.isArray(value)) {
                 value = value.join(" ");
-            } else if(key === "credentials.client_id") {
-                key = "client_id";
-            } else if(key === "credentials.client_secret") {
-                key = "client_secret";
             }
             exchangeGrantData[key] = value;
         }
@@ -171,26 +164,21 @@ export class TokenExchangeAuthenticationHelper<
 				"Refresh token not found",
 				"STS is not configured to return refresh token"
 			);
-        } else if (
-			!config?.stsConfig?.credentials?.client_id ||
-			!config?.stsConfig?.credentials?.client_secret
-		) {
+        } else if (!config?.stsConfig?.client_id) {
             throw new AsgardeoAuthException(
 				"TOKEN_EXCHANGE-AUTH_HELPER-RSAT2-NF02",
-				"Client credentials not found",
-				"Client credentials are not configured"
+				"Client ID not found",
+				"Client ID is not configured"
 			);
         }
 
-        const encodedAuthHeader = 
-            btoa(`${config?.stsConfig?.credentials?.client_id}:${config?.stsConfig?.credentials?.client_secret}`);
-
         const requestOptions: RequestInit = {
-            body: `grant_type=refresh_token&refresh_token=${stsSessionData.refresh_token}`,
+            // eslint-disable-next-line max-len
+            body: `grant_type=refresh_token&client_id=${config?.stsConfig?.client_id}&refresh_token=${stsSessionData.refresh_token}`,
             credentials: "include",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                authorization: `Basic ${ encodedAuthHeader.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "")}`
+                "accept": "application/json"
             },
             method: "POST",
             mode: "cors"

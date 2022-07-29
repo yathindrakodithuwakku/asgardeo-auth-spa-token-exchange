@@ -34,6 +34,7 @@
         "react": "^16.14.0",
         "react-dom": "16.14.0",
         "react-json-view": "^1.21.1",
+        "react-notifications-component": "^4.0.1",
         "react-router-dom": "5.2.0"
     },
     "devDependencies": {
