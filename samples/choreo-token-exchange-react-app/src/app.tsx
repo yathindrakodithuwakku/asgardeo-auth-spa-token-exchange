@@ -19,7 +19,7 @@
 import { AuthProvider, Storage, useAuthContext } from "@asgardeo/auth-react";
 import { TokenExchangePlugin } from "@asgardeo/token-exchange-plugin";
 import React, { FunctionComponent, ReactElement } from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { default as authConfig } from "./config.json";
 import { ErrorBoundary } from "./error-boundary";
@@ -58,4 +58,5 @@ const App = () => (
     </AuthProvider>
 );
 
-render((<App />), document.getElementById("root"));
+const root = createRoot(document.getElementById("root"));
+root.render(<App />);
