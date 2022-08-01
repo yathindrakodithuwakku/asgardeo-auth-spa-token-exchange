@@ -31,6 +31,7 @@
         "@asgardeo/auth-react": "^1.1.13",
         "@asgardeo/token-exchange-plugin": "^0.1.3",
         "@babel/runtime-corejs3": "^7.11.2",
+        "dev-server-ports": "^2.0.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-json-view": "^1.21.1",
