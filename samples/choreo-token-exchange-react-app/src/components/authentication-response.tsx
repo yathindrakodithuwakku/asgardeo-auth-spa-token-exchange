@@ -77,6 +77,7 @@ export const AuthenticationResponse: FunctionComponent<AuthenticationResponsePro
                 </code>&nbsp;SDK
             </h4>
             <div className="json">
+                {/* @ts-ignore */}
                 <ReactJson
                     src={ derivedResponse?.authenticateResponse }
                     name={ null }
@@ -108,6 +109,7 @@ export const AuthenticationResponse: FunctionComponent<AuthenticationResponsePro
                         <h5>
                             <b>Decoded:</b> Header
                         </h5>
+                        {/* @ts-ignore */}
                         <ReactJson
                             src={ derivedResponse?.decodedIdTokenHeader }
                             name={ null }
@@ -123,6 +125,7 @@ export const AuthenticationResponse: FunctionComponent<AuthenticationResponsePro
                         <h5>
                             <b>Decoded:</b> Payload
                         </h5>
+                        {/* @ts-ignore */}
                         <ReactJson
                             src={ derivedResponse?.decodedIDTokenPayload }
                             name={ null }

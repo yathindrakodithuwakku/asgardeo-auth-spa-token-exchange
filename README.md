@@ -61,7 +61,7 @@ Read more about the stsConfig [here](#STSConfig).
         "orgHandle": "",
     },
     "stsTokenEndpoint": "<CHOREO_TOKEN_ENDPOINT_URL>",
-    "resourceServerURLs": "<ADD_API_ENDPOINT_BASE_URL>",
+    "resourceServerURLs": "<ADD_API_ENDPOINT_BASE_URL>"
 }
 
 ```
@@ -313,7 +313,7 @@ return httpRequest(requestConfig)
 
 | Attribute | Required/Optional | Type | Default Value | Description |
 | --------- | ----------------- | ---- | ------------- | ----------- |
-| `credentials`          | Required          | `Credentials`        | -                                                                      | The client ID of the Security Token Service (STS). |                       |
+| `client_id`          | Required          | `string`        | -                                                                      | The client ID of the Security Token Service (STS). |                       |
 | `scope`                      | Required          | `string[]`      | `["openid"]`                                                            | Specifies the requested scopes.                                                                      |
 | `resource`               | Optional            | `string`        | ""                                                                      | The resource in which client intends to use the requested token.    
 | `audience`               | Optional            | `string`        | ""                                                                      | The target service in which client intends to use the requested token.                                   |
@@ -321,13 +321,6 @@ return httpRequest(requestConfig)
 | `actor_token_type`                  | Optional           | `string` | "" | Type of the security token in the `actor_token` parameter.
 
 **Note:** STSConfig also allows passing custom key-value pairs, which is intenteded to pass into the STSTokenEndpoint.
-
-### Credentials
-
-| Attribute | Required/Optional | Type | Default Value | Description |
-| --------- | ----------------- | ---- | ------------- | ----------- |
-| `client_id`          | Required          | `string`        | ""                                                                      | The client ID of the Security Token Service (STS). |                       |
-| `client_secret`                      | Required          | `string`      | ""                                                            | The client secret of the Security Token Service (STS).                                                                     |
 
 ## Develop
 
