@@ -12,11 +12,13 @@ Make sure to add `https://localhost:3000` as a Redirect URL and also add it unde
 
 ### Download the Sample
 
-Download the sample from [here](https://github.com/asgardeo/asgardeo-auth-spa-token-exchange/releases/latest/download/asgardeo-react-app.zip) and extract the zip file.
+Download the sample from [here](https://github.com/asgardeo/asgardeo-auth-spa-token-exchange/releases/latest/download/choreo-token-exchange-react-app.zip) and extract the zip file.
 
 ### Configure the Sample
 
 Update configuration file `src/config.json` with your registered app details.
+
+Add Choreo API endpoint under `API_ENDPOINT` property under `src/pages/home.tsx`.
 
 **Note:** You will only have to paste in the `client ID` generated for the application you registered.
 
@@ -30,11 +32,12 @@ Read more about the SDK configurations [here](../../README.md#authprovider).
     "signOutRedirectURL": "https://localhost:3000",
     "scope": ["openid","email","profile"],
     "stsConfig": {
-        "client_id": "<ADD_STS_CLIENT_ID_HERE>",
-        "orgHandle": "",
+        "client_id": "<ADD_CHOREO_CONSUMER_KEY_HERE>",
+        "orgHandle": "<ADD_CHOREO_ORG_HERE>",
         "scope": []
     },
-    "stsTokenEndpoint": "",
+    "stsTokenEndpoint": "<CHOREO_TOKEN_ENDPOINT_URL>",
+    "resourceServerURLs": "<ADD_API_ENDPOINT_BASE_URL>",
 }
 ```
 
