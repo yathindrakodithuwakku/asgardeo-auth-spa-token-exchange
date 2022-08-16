@@ -37,7 +37,7 @@ Read more about the SDK configurations [here](../../README.md#authprovider).
         "scope": []
     },
     "stsTokenEndpoint": "<CHOREO_TOKEN_ENDPOINT_URL>",
-    "resourceServerURLs": "<ADD_API_ENDPOINT_BASE_URL>",
+    "resourceServerURLs": "<ADD_API_ENDPOINT_BASE_URL>"
 }
 ```
 
