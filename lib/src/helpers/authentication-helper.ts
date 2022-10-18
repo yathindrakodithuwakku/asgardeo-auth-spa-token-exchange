@@ -258,7 +258,7 @@ export class TokenExchangeAuthenticationHelper<
     ): Promise<BasicUserInfo> {
         let userInfo = {} as BasicUserInfo;
         try {
-            this.refreshStsAccessToken();
+            await this.refreshStsAccessToken();
         } catch (error) {
             userInfo = await super.refreshAccessToken(
                 enableRetrievingSignOutURLFromSession
